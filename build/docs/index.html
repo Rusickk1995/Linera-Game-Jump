@@ -483,7 +483,29 @@ frameborder="1"
         window.frames["iframe"].location = url;
     }
 
+    // <-- тут был удалён лишний </script>
+
+    <script type="application/javascript">
+        const ws = new WebSocket("ws://IP_ТВОЕГО_ПК:8080/ws");
+
+        ws.onopen = () => {
+            console.log("Соединение с сервером установлено");
+            ws.send(JSON.stringify({"nickname": "ИмяИгрока"}));
+        };
+
+        ws.onmessage = (event) => {
+            console.log("Сообщение от сервера:", event.data);
+        };
+
+        ws.onclose = () => {
+            console.log("Соединение закрыто");
+        };
+
+        function sendResult(score) {
+            ws.send(JSON.stringify({ "score": score }));
+        };
     </script>
 
 </body>
 </html>
+<script>
